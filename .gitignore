@@ -215,4 +215,9 @@ marimo/_lsp/
 __marimo__/
 
 # Streamlit
+
 .streamlit/secrets.toml
+.idea/
+.venv/
+*.egg-info/
+__pycache__/
