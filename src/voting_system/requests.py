@@ -1,5 +1,6 @@
 def add_request(
     requests: list[dict],
+    users: list[str],
     created_by: str,
     reviewers: list[str],
     item: str,
@@ -21,7 +22,9 @@ def add_request(
         raise ValueError("You must select at least one reviewer.")
     if created_by in reviewers:
         raise ValueError("You cannot be your own reviewer.")
-
+    for reviewer in reviewers:
+        if reviewer not in users:
+            raise ValueError(f"Reviewer '{reviewer}' does not exist.")
     new_request = {
         "created_by": created_by,
         "reviewers": reviewers,
