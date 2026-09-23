@@ -9,13 +9,15 @@ def main():
     current_user = None
 
     while True:
-        print("\n1. Create user")
+        print("\n" + "-" * 30)
+        print("1. Create user")
         print("2. List users")
         print("3. Login")
         print("4. Create request")
         print("5. List requests")
         print("6. Vote on request")
         print("7. Exit")
+        print( "-" * 30)
         choice = input("Please enter your choice: ")
 
         if choice == "1":
@@ -26,8 +28,10 @@ def main():
                 print(f"Created user: {name.strip()}")
             except ValueError as error:
                 print(error)
+            input("\nPress Enter to return to menu...")
         elif choice == "2":
             print("Users:", ", ".join(users) if users else "None yet")
+            input("\nPress Enter to return to menu...")
         elif choice == "3":
             name = input("Username: ").strip()
             if name in users:
@@ -35,6 +39,7 @@ def main():
                 print(f"Logged in as {current_user}")
             else:
                 print("User not found.")
+            input("\nPress Enter to return to menu...")
         elif choice == "4":
             if current_user is None:
                 print("Please login first.")
@@ -77,13 +82,21 @@ def main():
                     print("Request created!")
                 except ValueError as error:
                     print(error)
+            input("\nPress Enter to return to menu...")
         elif choice == "5":
             if not requests_list:
                 print("No requests yet.")
             else:
                 for i, req in enumerate(requests_list, start=1):
+                    approvals = sum(1 for v in req["votes"].values() if v == "approve")
+                    rejections = sum(1 for v in req["votes"].values() if v == "reject")
+                    pending = [r for r in req["reviewers"] if r not in req["votes"]]
+
                     print(f"{i}. {req['item']} x{req['quantity']} - ${req['price']} "
-                          f"(by {req['created_by']}, reviewers: {', '.join(req['reviewers'])})")
+                          f"(by {req['created_by']})")
+                    print(f"   Approvals: {approvals}, Rejections: {rejections}, "
+                          f"Pending: {', '.join(pending) if pending else 'None'}")
+            input("\nPress Enter to return to menu...")
         elif choice == "6":
             if current_user is None:
                 print("Please login first.")
@@ -101,7 +114,8 @@ def main():
                     print("Vote recorded!")
                 except ValueError as error:
                     print(error)
+            input("\nPress Enter to return to menu...")
         elif choice == "7":
             break
         else:
-            print("Please choose 1, 2, 3，4，5 or 6.")
+            print("Please choose 1, 2, 3，4，5，6 or 7.")
