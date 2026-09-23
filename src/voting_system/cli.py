@@ -1,10 +1,11 @@
 from .users import add_user
-from .storage import load_users, save_users
 from .requests import add_request
+from .storage import load_users, save_users, load_requests, save_requests
+from .votes import cast_vote
 
 def main():
     users = load_users()
-    requests_list = []
+    requests_list = load_requests()
     current_user = None
 
     while True:
@@ -13,7 +14,8 @@ def main():
         print("3. Login")
         print("4. Create request")
         print("5. List requests")
-        print("6. Exit")
+        print("6. Vote on request")
+        print("7. Exit")
         choice = input("Please enter your choice: ")
 
         if choice == "1":
@@ -71,6 +73,7 @@ def main():
                 try:
                     requests_list = add_request(
                         requests_list, users, current_user, reviewers, item, quantity, price, reason)
+                    save_requests(requests_list)
                     print("Request created!")
                 except ValueError as error:
                     print(error)
@@ -82,6 +85,23 @@ def main():
                     print(f"{i}. {req['item']} x{req['quantity']} - ${req['price']} "
                           f"(by {req['created_by']}, reviewers: {', '.join(req['reviewers'])})")
         elif choice == "6":
+            if current_user is None:
+                print("Please login first.")
+            elif not requests_list:
+                print("No requests to vote on.")
+            else:
+                for i, req in enumerate(requests_list, start=1):
+                    print(f"{i}. {req['item']} x{req['quantity']} - ${req['price']} "
+                          f"(by {req['created_by']})")
+                try:
+                    choice_num = int(input("Which request number? "))
+                    decision = input("approve or reject? ").strip().lower()
+                    requests_list = cast_vote(requests_list, choice_num - 1, current_user, decision)
+                    save_requests(requests_list)
+                    print("Vote recorded!")
+                except ValueError as error:
+                    print(error)
+        elif choice == "7":
             break
         else:
             print("Please choose 1, 2, 3，4，5 or 6.")

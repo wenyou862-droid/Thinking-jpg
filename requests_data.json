@@ -1,0 +1,17 @@
+[
+  {
+    "created_by": "Alex",
+    "reviewers": [
+      "Bob",
+      "Candy",
+      "Tom"
+    ],
+    "item": "Apple",
+    "quantity": 1,
+    "price": 1.0,
+    "reason": "eat",
+    "votes": {
+      "Bob": "approve"
+    }
+  }
+]
