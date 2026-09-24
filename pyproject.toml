@@ -11,3 +11,8 @@ requires-python = ">=3.10"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["voting_system*"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.8",
+]

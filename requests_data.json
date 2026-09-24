@@ -13,5 +13,17 @@
     "votes": {
       "Bob": "approve"
     }
+  },
+  {
+    "created_by": "Bob",
+    "reviewers": [
+      "Alex",
+      "Candy"
+    ],
+    "item": "Football",
+    "quantity": 1,
+    "price": 11.0,
+    "reason": "Teacher required",
+    "votes": {}
   }
 ]

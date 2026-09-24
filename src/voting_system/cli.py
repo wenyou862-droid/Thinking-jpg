@@ -1,7 +1,9 @@
-from .users import add_user
 from .requests import add_request
-from .storage import load_users, save_users, load_requests, save_requests
+from .storage import load_requests, load_users, save_requests, save_users
+from .users import add_user
+from .utils import get_non_negative_float, get_positive_int
 from .votes import cast_vote
+
 
 def main():
     users = load_users()
@@ -72,8 +74,8 @@ def main():
 
                     break
                 item = input("What do you want to buy? ")
-                quantity = int(input("Quantity: "))
-                price = float(input("Price: "))
+                quantity = get_positive_int("Quantity: ")
+                price = get_non_negative_float("Price: ")
                 reason = input("Reason: ")
                 try:
                     requests_list = add_request(
